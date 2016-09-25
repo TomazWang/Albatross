@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Albatross</string>
+    <string name="dummy_listname">ListName</string>
+    <string name="creat_new_list">Create New List</string>
 </resources>
