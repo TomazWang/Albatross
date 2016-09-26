@@ -50,7 +50,27 @@ public class MainFragment extends Fragment{
         mRecyclerView = (RecyclerView)view.findViewById(R.id.list_lists);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mListAdapter = new TodoListAdapter();
+
+
+        TodoListAdapter.ListFunction listFunction = new TodoListAdapter.ListFunction() {
+            @Override
+            public void enterList(int listId) {
+                ((MainActivity)getActivity()).enterList(listId);
+            }
+
+            @Override
+            public void createNewList() {
+                // TODO: add create new list function;
+            }
+
+            @Override
+            public void editList(int listId) {
+                // TODO: add edit list function.
+            }
+        };
+
+
+        mListAdapter = new TodoListAdapter(mTodoListlist, listFunction);
         mRecyclerView.setAdapter(mListAdapter);
 
         return view;
