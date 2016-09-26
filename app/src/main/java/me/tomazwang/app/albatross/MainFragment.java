@@ -1,6 +1,7 @@
 package me.tomazwang.app.albatross;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +17,7 @@ import java.util.Arrays;
  * Created by TomazWang on 2016/9/24.
  */
 
-public class MainFragment extends Fragment{
+public class MainFragment extends Fragment implements TodoListAdapter.ListFunction{
 
     private ArrayList<String> mTodoListlist = new ArrayList<>();
 
@@ -24,6 +25,7 @@ public class MainFragment extends Fragment{
     // widgets
     private RecyclerView mRecyclerView;
     private TodoListAdapter mListAdapter;
+    private OnInteractionListener mListener;
 
     public static MainFragment newInstance() {
 
@@ -40,37 +42,32 @@ public class MainFragment extends Fragment{
         setupData();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnInteractionListener) {
+            mListener = (OnInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main,container,false);
 
-        // TODO: get widget.
         mRecyclerView = (RecyclerView)view.findViewById(R.id.list_lists);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-
-        TodoListAdapter.ListFunction listFunction = new TodoListAdapter.ListFunction() {
-            @Override
-            public void enterList(int listId) {
-                ((MainActivity)getActivity()).enterList(listId);
-            }
-
-            @Override
-            public void createNewList() {
-                // TODO: add create new list function;
-            }
-
-            @Override
-            public void editList(int listId) {
-                // TODO: add edit list function.
-            }
-        };
-
-
-        mListAdapter = new TodoListAdapter(mTodoListlist, listFunction);
+        mListAdapter = new TodoListAdapter(mTodoListlist, this);
         mRecyclerView.setAdapter(mListAdapter);
 
         return view;
@@ -99,8 +96,26 @@ public class MainFragment extends Fragment{
         };
 
         mTodoListlist.addAll(Arrays.asList(dummyTodolists));
-
-
     }
 
+
+    @Override
+    public void enterList(int listId) {
+        mListener.enterList(listId);
+    }
+
+    @Override
+    public void createNewList() {
+        // TODO: add create new list function;
+    }
+
+    @Override
+    public void editList(int listId) {
+        // TODO: add edit list function.
+    }
+
+
+    public interface OnInteractionListener{
+        void enterList(int listId);
+    }
 }
