@@ -33,4 +33,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnIn
     }
 
 
+    @Override
+    public void enterTask(int taskId) {
+        // TODO: go to TaskFragment with task Id
+    }
 }

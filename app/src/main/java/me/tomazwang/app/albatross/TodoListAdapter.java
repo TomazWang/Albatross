@@ -37,7 +37,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
     private ListFunction mListFunction;
 
     public TodoListAdapter(ArrayList<String> mTodoLists, ListFunction listFunction) {
-        this.mTodoLists.addAll(mTodoLists);
+        this.mTodoLists = mTodoLists;
         this.mListFunction = listFunction;
     }
 
@@ -115,7 +115,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
         }
 
 
-        String listName = getItem(position);
+        String listName = mTodoLists.get(position);
         holder.icon().setVisibility(View.VISIBLE);
         holder.listName().setText(listName);
     }
@@ -124,29 +124,13 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
         return mTodoLists.size();
     }
 
-    public void removeItem(int index) {
-        mTodoLists.remove(index);
-    }
-
-    public void removeItem(String item) {
-        mTodoLists.remove(item);
-    }
-
-    public void addItem(String listName) {
-        this.mTodoLists.add(listName);
-    }
-
-    public String getItem(int position) {
-        return mTodoLists.get(position);
-    }
-
 
     @Override
     public int getItemCount() {
         return mTodoLists.size() + 1; // +1 for "Create new list button"
     }
 
-    static interface ListFunction {
+    interface ListFunction {
         void enterList(int listId);
 
         void createNewList();
@@ -170,13 +154,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
             mListName = (TextView) itemView.findViewById(R.id.list_name);
 
             itemView.setOnClickListener(v -> mListener.onClick(v, getLayoutPosition()));
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mListener.onLongClick(v, getLayoutPosition());
-
-                    return true;
-                }
+            itemView.setOnLongClickListener(v -> {
+                mListener.onLongClick(v, getLayoutPosition());
+                return true;
             });
             mIcon.setOnClickListener(v -> mListener.onIconClick(itemView, v, getLayoutPosition()));
 
@@ -196,7 +176,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
         }
 
 
-        static interface TodoListOnItemClick {
+        interface TodoListOnItemClick {
 
             void onClick(View v, int position);
 

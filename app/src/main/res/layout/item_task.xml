@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/list_item_height"
+    android:gravity="center_vertical">
+
+    <CheckBox
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:id="@+id/task_checkBox"
+         />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/task_name"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:textSize="@dimen/list_text_size"
+        android:text="@string/dummy_task_name"
+        android:layout_toEndOf="@+id/task_checkBox"
+        android:paddingLeft="@dimen/list_text_right_padding"
+        />
+
+    <ImageView
+        android:id="@+id/task_label"
+        android:layout_width="@dimen/icon_size_small"
+        android:layout_height="match_parent"
+        android:src="@drawable/shapes"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/task_name" />
+</RelativeLayout>

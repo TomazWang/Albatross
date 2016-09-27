@@ -5,9 +5,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,7 +23,7 @@ import android.view.ViewGroup;
  * Use the {@link ListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements TaskAdpter.TaskFunciton {
 
     // the fragment initialization parameters.
     private static final String LIST_ID = "listId";
@@ -26,6 +32,8 @@ public class ListFragment extends Fragment {
 
     private OnInteractionListener mListener;
     private RecyclerView mRecyclerView;
+    private ArrayList<String> mDataSet;
+    private TaskAdpter mTaskAdpter;
 
     public ListFragment() {
         // Required empty public constructor
@@ -44,6 +52,9 @@ public class ListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mListID = getArguments().getInt(LIST_ID);
+
+            initDataSet();
+
         }
     }
 
@@ -57,7 +68,7 @@ public class ListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        TaskAdapter mTaskAdapter = new TaskAdpter();
+        this.mTaskAdpter = new TaskAdpter(mDataSet, this);
 
 
 
@@ -67,7 +78,6 @@ public class ListFragment extends Fragment {
 
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -80,13 +90,59 @@ public class ListFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    private void initDataSet() {
+        // TODO: replace dummy data
+
+        String[] dummy_tasks = new String[]{
+                "task1",
+                "task2",
+                "task3",
+                "task4",
+                "task5",
+                "task6",
+                "task7",
+                "task8",
+                "task9",
+                "task10",
+                "task11",
+                "task12"
+        };
+
+
+        this.mDataSet.addAll(Arrays.asList(dummy_tasks));
+
+    }
+
+    @Override
+    public void checkTask(int taskId, boolean isChecked) {
+        Log.d(TAG, "checkTask: "+taskId);
+    }
+
+    @Override
+    public void labelTask(int taskId) {
+        Log.d(TAG, "labelTask: "+taskId);
+    }
+
+    @Override
+    public void editTask(int taskId) {
+        Log.d(TAG, "editTask: "+taskId);
+    }
+
+    @Override
+    public void enterTask(int taskId) {
+        Log.d(TAG, "enterTask: "+taskId);
+        mListener.enterTask(taskId);
+    }
+
 
     public interface OnInteractionListener {
+        void enterTask(int taskId);
     }
 }
