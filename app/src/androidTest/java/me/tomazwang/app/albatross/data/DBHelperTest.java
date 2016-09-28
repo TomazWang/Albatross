@@ -1,5 +1,6 @@
-package me.tomazwang.app.albatross;
+package me.tomazwang.app.albatross.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,8 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import static android.content.ContentValues.TAG;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by TomazWang on 2016/9/29.
@@ -47,9 +47,9 @@ public class DBHelperTest {
         // Note that there will be another table in the DB that stores the
         // Android metadata (db version information)
         final HashSet<String> tableNameHashSet = new HashSet<String>();
-        tableNameHashSet.add(DBContract.TodoListEntry.TABLE_TODOLIST);
-        tableNameHashSet.add(DBContract.TaskEntry.TABLE_TASK);
-        tableNameHashSet.add(DBContract.NoteEntry.TABLE_NOTE);
+        tableNameHashSet.add(DBContract.TodoListEntry.TABLE_NAME);
+        tableNameHashSet.add(DBContract.TaskEntry.TABLE_NAME);
+        tableNameHashSet.add(DBContract.NoteEntry.TABLE_NAME);
 
         mContext.deleteDatabase(DBHelper.DATABASE_NAME);
         SQLiteDatabase db = new DBHelper(
@@ -74,17 +74,17 @@ public class DBHelperTest {
                 tableNameHashSet.isEmpty());
 
 
-        // -- Testing TABLE_TODOLIST
+        // -- Testing TABLE_NAME
         testColum(db, c,
-                DBContract.TodoListEntry.TABLE_TODOLIST,
+                DBContract.TodoListEntry.TABLE_NAME,
                 DBContract.TodoListEntry._ID,
                 DBContract.TodoListEntry.COL_LIST_NAME,
                 DBContract.TodoListEntry.COL_CREATE_DATE,
                 DBContract.TodoListEntry.COL_FOLDER_KEY);
 
-        // -- Testing TABLE_TASK
+        // -- Testing TABLE_NAME
         testColum(db, c,
-                DBContract.TaskEntry.TABLE_TASK,
+                DBContract.TaskEntry.TABLE_NAME,
                 DBContract.TaskEntry._ID,
                 DBContract.TaskEntry.COL_LIST_KEY,
                 DBContract.TaskEntry.COL_TASK_NAME,
@@ -92,9 +92,9 @@ public class DBHelperTest {
                 DBContract.TaskEntry.COL_IS_CHECKED);
 
 
-        // -- Testing TABLE_NOTE
+        // -- Testing TABLE_NAME
         testColum(db, c,
-                DBContract.NoteEntry.TABLE_NOTE,
+                DBContract.NoteEntry.TABLE_NAME,
                 DBContract.NoteEntry._ID,
                 DBContract.NoteEntry.COL_TASK_KEY,
                 DBContract.NoteEntry.COL_LAST_EDIT_DATE,
@@ -135,6 +135,79 @@ public class DBHelperTest {
 
 
     }
+
+    @Test
+    public void testTableList(){
+
+        SQLiteDatabase db = new DBHelper(this.mContext).getWritableDatabase();
+
+        assertEquals(true, db.isOpen());
+
+        // -- add value
+        ContentValues cv = TestValue.createTestTodoList();
+
+        long rowId = db.insert(DBContract.TodoListEntry.TABLE_NAME, null, cv);
+
+        assertFalse("row id = -1 when querying "+DBContract.TodoListEntry.TABLE_NAME, rowId == -1);
+
+        Cursor c = db.query(
+                DBContract.TodoListEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        TestValue.validateCursor("table "+DBContract.TodoListEntry.TABLE_NAME+" failed to validate.",c, cv);
+
+        assertFalse("Error: more than one row return from db", c.moveToNext());
+
+        c.close();
+
+        db.close();
+
+    }
+
+
+    @Test
+    public void testTableTask(){
+
+        SQLiteDatabase db = new DBHelper(this.mContext).getWritableDatabase();
+
+        assertEquals(true, db.isOpen());
+
+        // -- add value
+        ContentValues cv = TestValue.createTestTask();
+
+        long rowId = db.insert(DBContract.TaskEntry.TABLE_NAME, null, cv);
+
+        assertFalse("row id = -1 when querying "+DBContract.TaskEntry.TABLE_NAME, rowId == -1);
+
+        Cursor c = db.query(
+                DBContract.TaskEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        TestValue.validateCursor("table "+DBContract.TaskEntry.TABLE_NAME+" failed to validate.",c, cv);
+
+        assertFalse("Error: more than one row return from db", c.moveToNext());
+
+        c.close();
+
+        db.close();
+
+    }
+
+
 
 
 

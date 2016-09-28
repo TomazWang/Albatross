@@ -1,4 +1,4 @@
-package me.tomazwang.app.albatross;
+package me.tomazwang.app.albatross.data;
 
 import android.provider.BaseColumns;
 
@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 public class DBContract {
 
     public static final class TodoListEntry implements BaseColumns{
-        public static final String TABLE_TODOLIST = "TABLE_TODOLIST";
+        public static final String TABLE_NAME = "TABLE_TODO_LIST";
 
         public static final String COL_LIST_NAME = "COL_LIST_NAME";
 
@@ -21,7 +21,7 @@ public class DBContract {
 
     public static final class TaskEntry implements BaseColumns{
 
-        public static final String TABLE_TASK = "TABLE_TASK";
+        public static final String TABLE_NAME = "TABLE_TASK";
 
         public static final String COL_LIST_KEY = "COL_LIST_KEY";
 
@@ -36,7 +36,7 @@ public class DBContract {
 
     public static final class NoteEntry implements BaseColumns{
 
-        public static final String TABLE_NOTE = "TABLE_NOTE";
+        public static final String TABLE_NAME = "TABLE_NOTE";
 
         public static final String COL_TASK_KEY = "COL_TASK_KEY";
 

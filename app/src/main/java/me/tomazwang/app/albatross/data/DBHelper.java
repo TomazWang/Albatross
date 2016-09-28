@@ -1,14 +1,14 @@
-package me.tomazwang.app.albatross;
+package me.tomazwang.app.albatross.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import me.tomazwang.app.albatross.DBContract.TodoListEntry;
+import me.tomazwang.app.albatross.data.DBContract.TodoListEntry;
 
 import static android.content.ContentValues.TAG;
-import static me.tomazwang.app.albatross.DBContract.*;
+import static me.tomazwang.app.albatross.data.DBContract.*;
 
 /**
  * Created by TomazWang on 2016/9/28.
@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate: create db");
 
         final String SQL_CREATE_TABLE_LIST =
-                "CREATE TABLE " + TodoListEntry.TABLE_TODOLIST
+                "CREATE TABLE " + TodoListEntry.TABLE_NAME
                         + " ("
                         + TodoListEntry._ID + " INTEGER PRIMARY KEY, "
                         + TodoListEntry.COL_LIST_NAME + " TEXT NOT NULL, "
@@ -42,18 +42,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         final String SQL_CREATE_TABLE_TASK =
-                "CREATE TABLE " + TaskEntry.TABLE_TASK
+                "CREATE TABLE " + TaskEntry.TABLE_NAME
                         + " ("
                         + TaskEntry._ID + " INTEGER PRIMARY KEY, "
                         + TaskEntry.COL_LIST_KEY + " INTEGER NOT NULL, "
                         + TaskEntry.COL_TASK_NAME + " TEXT NOT NULL, "
                         + TaskEntry.COL_CREATE_DATE + " TEXT NOT NULL, "
-                        + TaskEntry.COL_IS_CHECKED + " BOLB NOT NULL"
+                        + TaskEntry.COL_IS_CHECKED + " INTEGER NOT NULL"
                         + " );";
 
 
         final String SQL_CREATE_TABLE_NOTE =
-                "CREATE TABLE " + NoteEntry.TABLE_NOTE
+                "CREATE TABLE " + NoteEntry.TABLE_NAME
                         + " ("
                         + NoteEntry._ID + " INTEGER PRIMARY KEY, "
                         + NoteEntry.COL_TASK_KEY + " INTEGER NOT NULL, "
@@ -74,11 +74,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-        // TODO: really upgrade the db
+        // TODO: really upgrade the db use alter table
 
-        db.execSQL("DROP TABLE IF EXISTS "+TodoListEntry.TABLE_TODOLIST);
-        db.execSQL("DROP TABLE IF EXISTS "+TaskEntry.TABLE_TASK);
-        db.execSQL("DROP TABLE IF EXISTS "+NoteEntry.TABLE_NOTE);
+        db.execSQL("DROP TABLE IF EXISTS "+TodoListEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+TaskEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+NoteEntry.TABLE_NAME);
 
         onCreate(db);
 
