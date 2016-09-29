@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import static android.content.ContentValues.TAG;
+import static me.tomazwang.app.albatross.data.DBHelper.getHelper;
 import static org.junit.Assert.*;
 
 /**
@@ -52,7 +53,7 @@ public class DBHelperTest {
         tableNameHashSet.add(DBContract.NoteEntry.TABLE_NAME);
 
         mContext.deleteDatabase(DBHelper.DATABASE_NAME);
-        SQLiteDatabase db = new DBHelper(
+        SQLiteDatabase db = DBHelper.getHelper(
                 this.mContext).getWritableDatabase();
 
         assertEquals(true, db.isOpen());
@@ -139,7 +140,7 @@ public class DBHelperTest {
     @Test
     public void testTableList(){
 
-        SQLiteDatabase db = new DBHelper(this.mContext).getWritableDatabase();
+        SQLiteDatabase db = getHelper(this.mContext).getWritableDatabase();
 
         assertEquals(true, db.isOpen());
 
@@ -175,7 +176,7 @@ public class DBHelperTest {
     @Test
     public void testTableTask(){
 
-        SQLiteDatabase db = new DBHelper(this.mContext).getWritableDatabase();
+        SQLiteDatabase db = DBHelper.getHelper(this.mContext).getWritableDatabase();
 
         assertEquals(true, db.isOpen());
 

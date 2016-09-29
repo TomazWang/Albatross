@@ -20,10 +20,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "albatross.db";
 
+    private static DBHelper mDBHelper;
 
-    public DBHelper(Context context) {
+
+    private DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+    public static DBHelper getHelper(Context context){
+
+        if(mDBHelper != null){
+            return mDBHelper;
+        }
+
+        mDBHelper = new DBHelper(context);
+
+        return mDBHelper;
+
+    }
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
