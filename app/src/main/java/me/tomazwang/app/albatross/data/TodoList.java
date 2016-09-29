@@ -16,6 +16,10 @@ public class TodoList implements Parcelable{
     private Date createDate;
     private int folderId;
 
+    public TodoList(String listName, int folderId, Date createDate){
+        this(0, listName, folderId, createDate);
+    }
+
     public TodoList(long id, String listName, int folderId, Date createDate){
         this.id = id;
         this.listName = listName;
