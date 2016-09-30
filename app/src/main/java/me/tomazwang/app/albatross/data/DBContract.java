@@ -38,9 +38,11 @@ public class DBContract {
 
         public static final String TABLE_NAME = "TABLE_NOTE";
 
+
         public static final String COL_TASK_KEY = "COL_TASK_KEY";
 
         public static final String COL_NOTE_CONTEXT = "COL_NOTE_CONTEXT";
+
         public static final String COL_LAST_EDIT_DATE = "COL_LAST_EDIT_DATE";
     }
 

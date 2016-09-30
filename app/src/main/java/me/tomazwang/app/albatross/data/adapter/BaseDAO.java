@@ -1,4 +1,4 @@
-package me.tomazwang.app.albatross.data;
+package me.tomazwang.app.albatross.data.adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+
+import me.tomazwang.app.albatross.data.DBHelper;
 
 /**
  * Created by TomazWang on 2016/9/29.

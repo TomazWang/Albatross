@@ -1,4 +1,4 @@
-package me.tomazwang.app.albatross.data;
+package me.tomazwang.app.albatross.data.adapter;
 
 import android.content.ContentValues;
 import android.database.Cursor;

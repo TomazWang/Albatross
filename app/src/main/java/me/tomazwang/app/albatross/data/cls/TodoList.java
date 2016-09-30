@@ -1,4 +1,4 @@
-package me.tomazwang.app.albatross.data;
+package me.tomazwang.app.albatross.data.cls;
 
 import android.os.Parcel;
 import android.os.Parcelable;

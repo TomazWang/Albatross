@@ -1,4 +1,4 @@
-package me.tomazwang.app.albatross.data;
+package me.tomazwang.app.albatross.data.adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,10 @@ import android.database.Cursor;
 import java.text.ParseException;
 import java.util.Date;
 
+import me.tomazwang.app.albatross.data.DBContract;
+import me.tomazwang.app.albatross.data.DataUtils;
+import me.tomazwang.app.albatross.data.cls.Task;
+
 /**
  * Created by TomazWang on 2016/9/29.
  */
@@ -14,8 +18,8 @@ import java.util.Date;
 public class TaskDAO extends BaseDAO<Task> {
 
 
-    public TaskDAO(Context context, String tableName) {
-        super(context, tableName);
+    public TaskDAO(Context context) {
+        super(context, DBContract.TaskEntry.TABLE_NAME);
     }
 
     @Override
